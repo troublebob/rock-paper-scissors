@@ -22,10 +22,10 @@ function computerPlay(){
     return Math.floor(Math.random()*3)
 }
 function playRound(playerSelection,computerSelection){
-    if(playerSelection===computerSelection){
+    if(playerSelection === computerSelection){
         return 0
     }
-    if(computerSelection%3+1 ===playerSelection){
+    if(computerSelection%3+1 === playerSelection){
         return 1
     }else{
         return -1
@@ -54,6 +54,10 @@ function game(){
         }
         console.log(`You $(verdict) the computer had $(nameOfValue(computer))`)
     }
-
+    if(score>0){
+        console.log("You've beaten the computer in the best of 5")
+    }else{
+        console.log("I'm sorry the computer has beaten you in the best of 5")
+    }
 }
 game()
