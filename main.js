@@ -1,62 +1,69 @@
-function nameOfValue(play){
-    if(play===0){
+function nameOfValue(play) {
+    if (play === 0) {
         return "ROCK"
-    }else if(play===1){
+    } else if (play === 1) {
         return "PAPER"
-    }else{
+    } else {
         return "SCISSORS"
     }
 }
-function valueOfName(play){
-    if(play==="ROCK"){
+function valueOfName(play) {
+    if (play === "ROCK") {
         return 0
-    }else if(play==="PAPER"){
+    } else if (play === "PAPER") {
         return 1
-    }else if(play=="SCISSORS"){
+    } else if (play == "SCISSORS") {
         return 2
-    }else{
+    } else {
         return 3
     }
 }
-function computerPlay(){
-    return Math.floor(Math.random()*3)
+function computerPlay() {
+    return Math.floor(Math.random() * 3)
 }
-function playRound(playerSelection,computerSelection){
-    if(playerSelection === computerSelection){
+function playRound(playerSelection, computerSelection) {
+    //console.log(`MOD of Comp ${(computerSelection+1)%3}, ${playerSelection}`)
+    if (playerSelection === computerSelection) {
+        //console.log(`DRAW SELECTED ${playerSelection},${computerSelection},0`)
         return 0
     }
-    if(computerSelection%3+1 === playerSelection){
+    if ((computerSelection + 1) % 3 === playerSelection) {
+        //console.log(`WIN SELECTED ${playerSelection},${computerSelection},1`)
         return 1
-    }else{
+    } else {
+        //console.log(`LOSS SELECTED ${playerSelection},${computerSelection},-1`)
         return -1
     }
 }
-function game(){
+function game() {
     let score = 0
     let win = "win"
     let lose = "lose"
     let draw = "draw"
-    let player = 0
+    let player = 3
     let computer = 0
     let verdict = win
-    for(let i=0; i++; i < 5){
-        computer = computerPlay
-        do{
-            (player)=valueOfName(toLocaleUppercase(prompt("Please enter your selection Rock, Paper or Scissors",null)))
-        }while(player!=3)
-        score+=playRound(player,computer)
-        if(playRound(player,computer)===0){
+    for (let i = 0; i < 5; i++) {
+        computer = computerPlay()
+        do {
+            (player) = valueOfName(prompt("Please enter your selection Rock, Paper or Scissors", "").toLocaleUpperCase())
+        } while (player == 3)
+
+        score += playRound(player, computer)
+
+
+        if (playRound(player, computer) === 0) {
             verdict = draw
-        }else if(playRound(player,computer)===1){
+        } else if (playRound(player, computer) === 1) {
             verdict = win
-        }else{
+        } else {
             verdict = lose
         }
-        console.log(`You $(verdict) the computer had $(nameOfValue(computer))`)
+        console.log(`You ${verdict} the computer had ${nameOfValue(computer)} and you had ${nameOfValue(player)}`)
     }
-    if(score>0){
+    if (score > 0) {
         console.log("You've beaten the computer in the best of 5")
-    }else{
+    } else {
         console.log("I'm sorry the computer has beaten you in the best of 5")
     }
 }
