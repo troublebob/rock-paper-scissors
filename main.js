@@ -7,6 +7,14 @@ function nameOfValue(play) {
         return "SCISSORS"
     }
 }
+function playerSelection(){
+    const imageSelector = document.querySelectorAll('image');
+    imageSelector.forEach((imageSelector) => {
+        imageSelector.addEventListener('click', (e) => {
+          alert(image.id);
+        });
+      });
+}
 function valueOfName(play) {
     if (play === "ROCK") {
         return 0
@@ -36,6 +44,7 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 function game() {
+    const images = document.querySelectorAll('image');
     let score = 0
     let win = "win"
     let lose = "lose"
@@ -59,12 +68,13 @@ function game() {
         } else {
             verdict = lose
         }
-        console.log(`You ${verdict} the computer had ${nameOfValue(computer)} and you had ${nameOfValue(player)}`)
+        //console.log(`You ${verdict} the computer had ${nameOfValue(computer)} and you had ${nameOfValue(player)}`)
     }
     if (score > 0) {
-        console.log("You've beaten the computer in the best of 5")
+        //console.log("You've beaten the computer in the best of 5")
     } else {
-        console.log("I'm sorry the computer has beaten you in the best of 5")
+        //console.log("I'm sorry the computer has beaten you in the best of 5")
     }
 }
-game()
+//game()
+playerSelection();
