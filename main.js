@@ -43,20 +43,18 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 function game() {
-    const images = document.querySelectorAll('image');
+    const buttons = document.querySelectorAll('button');
     let score = 0
     let win = "win"
     let lose = "lose"
     let draw = "draw"
-    let player = 3
+    let player = button.id
     let computer = 0
     let verdict = win
     for (let i = 0; i < 5; i++) {
         computer = computerPlay()
-        do {
-            (player) = nameOfValue(playerSelection())//valueOfName(prompt("Please enter your selection Rock, Paper or Scissors", "").toLocaleUpperCase())
-        } while (player == 3)
-
+        //const buttons = document.querySelectorAll('button');
+        
         score += playRound(player, computer)
 
         if (playRound(player, computer) === 0) {
@@ -66,11 +64,16 @@ function game() {
         } else {
             verdict = lose
         }
+        console.log(resultMessage(player, computer, verdict));
+
     }
     if (score > 0) {
-        //console.log("You've beaten the computer in the best of 5")
+        console.log("You've beaten the computer in the best of 5")
     } else {
-        //console.log("I'm sorry the computer has beaten you in the best of 5")
+        console.log("I'm sorry the computer has beaten you in the best of 5")
     }
+}
+function resultMessage(player, computer, verdict){
+    return "You ${verdict}, you chose ${nameOfValue(player)} the computer chose ${nameofValue(computer)}"
 }
 game()
