@@ -23,6 +23,15 @@ function nameOfValue(play) {
 function resultMessage(player, computer, verdict){
     return "You "+ verdict +" you chose " + nameOfValue(player) + " the computer chose " + nameOfValue(computer);
 }
+function reset(container, result, verdict){
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+    result.textContent = "You " + verdict + "! Click again to go again";
+    container.appendChild(result);
+    playerScore = 0
+    computerScore = 0
+}
 const buttons = document.querySelectorAll('button');
 let score = 0
 let verdict =""
@@ -51,21 +60,9 @@ buttons.forEach((button) => {
     result.textContent = resultMessage(player, computer, verdict);
     container.appendChild(result);
     if(playerScore===5){
-        while (container.firstChild) {
-            conatiner.removeChild(container.firstChild);
-        }
-        result.textContent = "You have won the race to 5"
-        container.appendChild(result);
-        playerScore = 0
-        computerScore = 0
+        reset(container, result, "win");
     } else if (computerScore===5){
-        while (container.firstChild) {
-            conatiner.removeChild(container.firstChild);
-        }
-        result.textContent = "You have lost the race to 5"
-        container.appendChild(result);
-        playerScore = 0
-        computerScore = 0
+        reset(container, result, "lose");
     }
     
   });
