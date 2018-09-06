@@ -1,34 +1,3 @@
-function nameOfValue(play) {
-    if (play === 0) {
-        return "ROCK"
-    } else if (play === 1) {
-        return "PAPER"
-    } else {
-        return "SCISSORS"
-    }
-}
-function playerSelection(play){
-/*     const imageSelector = document.querySelectorAll('input');
-    imageSelector.forEach((imageSelector) => {
-        imageSelector.addEventListener('click', (e) => {
-          console.log("Hmmmm");
-            alert(imageSelector.id);
-            return imageSelector.id
-        });
-      }); */
-      return play;
-}
-function valueOfName(play) {
-    if (play === "ROCK") {
-        return 0
-    } else if (play === "PAPER") {
-        return 1
-    } else if (play == "SCISSORS") {
-        return 2
-    } else {
-        return 3
-    }
-}
 function computerPlay() {
     return Math.floor(Math.random() * 3)
 }
@@ -42,38 +11,62 @@ function playRound(playerSelection, computerSelection) {
         return -1
     }
 }
-function game() {
-    const buttons = document.querySelectorAll('button');
-    let score = 0
-    let win = "win"
-    let lose = "lose"
-    let draw = "draw"
-    let player = button.id
-    let computer = 0
-    let verdict = win
-    for (let i = 0; i < 5; i++) {
-        computer = computerPlay()
-        //const buttons = document.querySelectorAll('button');
-        
-        score += playRound(player, computer)
-
-        if (playRound(player, computer) === 0) {
-            verdict = draw
-        } else if (playRound(player, computer) === 1) {
-            verdict = win
-        } else {
-            verdict = lose
-        }
-        console.log(resultMessage(player, computer, verdict));
-
-    }
-    if (score > 0) {
-        console.log("You've beaten the computer in the best of 5")
+function nameOfValue(play) {
+    if (play === 0) {
+        return "ROCK"
+    } else if (play === 1) {
+        return "PAPER"
     } else {
-        console.log("I'm sorry the computer has beaten you in the best of 5")
+        return "SCISSORS"
     }
 }
 function resultMessage(player, computer, verdict){
-    return "You ${verdict}, you chose ${nameOfValue(player)} the computer chose ${nameofValue(computer)}"
+    return "You "+ verdict +" you chose " + nameOfValue(player) + " the computer chose " + nameOfValue(computer);
 }
-game()
+const buttons = document.querySelectorAll('button');
+let score = 0
+let verdict =""
+let computer = 0
+let player = 0
+let playerScore = 0
+let computerScore = 0
+buttons.forEach((button) => {
+  button.addEventListener('click', (e) => {
+    player=parseInt(button.id);
+    computer = computerPlay()  
+    
+    //score += playRound(player, computer)
+
+    if (playRound(player, computer) === 0) {
+        verdict = "draw"
+    } else if (playRound(player, computer) === 1) {
+        verdict = "win"
+        document.querySelector('#playerScore').textContent = ++playerScore;
+    } else {
+        verdict = "lose"
+        document.querySelector('#computerScore').textContent = ++computerScore;
+    }
+    const container=document.querySelector('#container');
+    const result=document.createElement('h2');
+    result.textContent = resultMessage(player, computer, verdict);
+    container.appendChild(result);
+    if(playerScore===5){
+        while (container.firstChild) {
+            conatiner.removeChild(container.firstChild);
+        }
+        result.textContent = "You have won the race to 5"
+        container.appendChild(result);
+        playerScore = 0
+        computerScore = 0
+    } else if (computerScore===5){
+        while (container.firstChild) {
+            conatiner.removeChild(container.firstChild);
+        }
+        result.textContent = "You have lost the race to 5"
+        container.appendChild(result);
+        playerScore = 0
+        computerScore = 0
+    }
+    
+  });
+});
