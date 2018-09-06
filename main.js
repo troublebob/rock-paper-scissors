@@ -1,3 +1,16 @@
+function computerPlay() {
+    return Math.floor(Math.random() * 3)
+}
+function playRound(playerSelection, computerSelection) {
+    if (playerSelection === computerSelection) {
+        return 0
+    }
+    if ((computerSelection + 1) % 3 === playerSelection) {
+        return 1
+    } else {
+        return -1
+    }
+}
 function nameOfValue(play) {
     if (play === 0) {
         return "ROCK"
@@ -7,64 +20,50 @@ function nameOfValue(play) {
         return "SCISSORS"
     }
 }
-function valueOfName(play) {
-    if (play === "ROCK") {
-        return 0
-    } else if (play === "PAPER") {
-        return 1
-    } else if (play == "SCISSORS") {
-        return 2
-    } else {
-        return 3
-    }
+function resultMessage(player, computer, verdict){
+    return "You "+ verdict +" you chose " + nameOfValue(player) + " the computer chose " + nameOfValue(computer);
 }
-function computerPlay() {
-    return Math.floor(Math.random() * 3)
-}
-function playRound(playerSelection, computerSelection) {
-    //console.log(`MOD of Comp ${(computerSelection+1)%3}, ${playerSelection}`)
-    if (playerSelection === computerSelection) {
-        //console.log(`DRAW SELECTED ${playerSelection},${computerSelection},0`)
-        return 0
+function reset(container, result, verdict){
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
     }
-    if ((computerSelection + 1) % 3 === playerSelection) {
-        //console.log(`WIN SELECTED ${playerSelection},${computerSelection},1`)
-        return 1
-    } else {
-        //console.log(`LOSS SELECTED ${playerSelection},${computerSelection},-1`)
-        return -1
-    }
+    result.textContent = "You " + verdict + "! Click again to go again";
+    container.appendChild(result);
+    playerScore = 0
+    computerScore = 0
 }
-function game() {
-    let score = 0
-    let win = "win"
-    let lose = "lose"
-    let draw = "draw"
-    let player = 3
-    let computer = 0
-    let verdict = win
-    for (let i = 0; i < 5; i++) {
-        computer = computerPlay()
-        do {
-            (player) = valueOfName(prompt("Please enter your selection Rock, Paper or Scissors", "").toLocaleUpperCase())
-        } while (player == 3)
+const buttons = document.querySelectorAll('button');
+let score = 0
+let verdict =""
+let computer = 0
+let player = 0
+let playerScore = 0
+let computerScore = 0
+buttons.forEach((button) => {
+  button.addEventListener('click', (e) => {
+    player=parseInt(button.id);
+    computer = computerPlay()  
+    
+    //score += playRound(player, computer)
 
-        score += playRound(player, computer)
-
-
-        if (playRound(player, computer) === 0) {
-            verdict = draw
-        } else if (playRound(player, computer) === 1) {
-            verdict = win
-        } else {
-            verdict = lose
-        }
-        console.log(`You ${verdict} the computer had ${nameOfValue(computer)} and you had ${nameOfValue(player)}`)
-    }
-    if (score > 0) {
-        console.log("You've beaten the computer in the best of 5")
+    if (playRound(player, computer) === 0) {
+        verdict = "draw"
+    } else if (playRound(player, computer) === 1) {
+        verdict = "win"
+        document.querySelector('#playerScore').textContent = ++playerScore;
     } else {
-        console.log("I'm sorry the computer has beaten you in the best of 5")
+        verdict = "lose"
+        document.querySelector('#computerScore').textContent = ++computerScore;
     }
-}
-game()
+    const container=document.querySelector('#container');
+    const result=document.createElement('h2');
+    result.textContent = resultMessage(player, computer, verdict);
+    container.appendChild(result);
+    if(playerScore===5){
+        reset(container, result, "win");
+    } else if (computerScore===5){
+        reset(container, result, "lose");
+    }
+    
+  });
+});
